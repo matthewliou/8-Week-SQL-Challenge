@@ -66,12 +66,12 @@ What is the most purchased item on the menu and how many times was it purchased 
 Which item was the most popular for each customer?
 ```
 a as(
- SELECT
- 	customer_id,
- 	product_name,
-    COUNT(product_name) as count,
-  DENSE_RANK() OVER(PARTITION BY customer_id ORDER BY COUNT(product_name) DESC) as rank
- FROM
+	SELECT
+	customer_id,
+	product_name,
+	COUNT(product_name) as count,
+	DENSE_RANK() OVER(PARTITION BY customer_id ORDER BY COUNT(product_name) DESC) as rank
+	FROM
  	joined
  GROUP BY
  	customer_id,
@@ -84,4 +84,32 @@ count
 FROM a
 WHERE rank = 1
 ```
+### Question #6
+Which item was purchased first by the customer after they became a member?
+```
+a as(
+ SELECT
+ 	customer_id,
+ 	product_name,
+  	order_date,
+  	DENSE_RANK() OVER(PARTITION BY customer_id ORDER BY order_date DESC) as rank
+ FROM 
+  	joined
+ WHERE 
+  	join_date < order_date
+  )
+  
+SELECT 
+	customer_id,
+    product_name
+FROM 
+	a
+WHERE 
+	rank = 1
+GROUP BY 
+	customer_id,
+    product_name
+```
+### Question #7
+Which item was purchased first by the customer after they became a member?
 
