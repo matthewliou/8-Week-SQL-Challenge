@@ -203,3 +203,29 @@ WHERE customer_id != 'C'
 GROUP BY customer_id
 ORDER BY customer_id
 ```
+### Bonus Question
+Join All The Things
+```
+WITH joined AS(
+	(SELECT s.customer_id, s.order_date, s.product_id, m.product_name, m.price, me.join_date,
+     CASE WHEN
+     	s.order_date >= me.join_date THEN 'Y'ELSE 'N' END as member
+     FROM dannys_diner.sales as s
+     LEFT JOIN dannys_diner.menu as m
+     ON s.product_id = m.product_id
+     LEFT JOIN dannys_diner.members as me
+     ON s.customer_id = me.customer_id
+    )
+  )
+  
+ SELECT 
+ 	customer_id,
+    order_date,
+    product_name,
+    price,
+    member
+ from joined
+ ORDER BY
+ customer_id,
+  order_date
+```
