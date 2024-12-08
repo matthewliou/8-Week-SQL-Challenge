@@ -31,3 +31,57 @@ SELECT
   GROUP BY customer_id
   ORDER BY customer_id ASC
 ```
+### Question #3
+What was the first item from the menu purchased by each customer?
+```
+ d as(
+  SELECT 
+  	*,
+    DENSE_RANK() OVER(PARTITION BY customer_id ORDER BY order_date ASC) as rank
+  FROM joined
+)
+
+SELECT 
+customer_id,
+product_name
+FROM d
+WHERE rank = 1
+GROUP BY customer_id, product_name
+```
+### Question #4
+What is the most purchased item on the menu and how many times was it purchased by all customers?
+```
+ SELECT
+ 	product_name,
+    COUNT(customer_id) as count
+ FROM
+ 	joined
+ GROUP BY
+ 	product_name
+ ORDER BY
+ 	count DESC
+ LIMIT 1
+```
+### Question #5
+Which item was the most popular for each customer?
+```
+a as(
+ SELECT
+ 	customer_id,
+ 	product_name,
+    COUNT(product_name) as count,
+  DENSE_RANK() OVER(PARTITION BY customer_id ORDER BY COUNT(product_name) DESC) as rank
+ FROM
+ 	joined
+ GROUP BY
+ 	customer_id,
+    product_name
+)
+SELECT
+customer_id,
+product_name,
+count
+FROM a
+WHERE rank = 1
+```
+
