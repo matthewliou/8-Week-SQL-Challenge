@@ -60,3 +60,6 @@ db as (
  	COUNT(pizza_id) as orderedpizzas
  FROM db
 ```
+Answer:
+![image](https://github.com/user-attachments/assets/461c8cba-50a2-44eb-823e-d7ec38236938)
+
