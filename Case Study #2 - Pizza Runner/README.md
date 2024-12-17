@@ -64,3 +64,23 @@ Answer:
 
 ![image](https://github.com/user-attachments/assets/461c8cba-50a2-44eb-823e-d7ec38236938)
 
+### Question 2: How many unique customer orders were made?
+```
+SELECT 
+    count(distinct order_id) as orders
+ FROM db
+```
+Answer:
+![image](https://github.com/user-attachments/assets/2585f3ac-2ad7-4d40-92c6-5465533139cf)
+
+### Question 3: How many successful orders were delivered by each runner?
+```
+SELECT 
+ 	runner_id,
+    count(distinct order_id) as successfulorders
+ FROM db
+WHERE cancellation NOT LIKE '%Cancellation%'
+ GROUP BY runner_id
+```
+Answer:
+![image](https://github.com/user-attachments/assets/56f2df83-70b3-4d6d-ab92-36387255019f)
