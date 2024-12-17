@@ -1,5 +1,5 @@
 ## Questions and Answers
-# Cleaning and Transforming Data
+### Cleaning and Transforming Data
 ```
 WITH
 db_customer_orders as (
@@ -27,4 +27,36 @@ db_runner_orders as (
   	runner_orders
   )
 ```
-
+### Joining tables for ease of querying
+```
+db as (
+  SELECT 
+  co.order_id,
+  co.customer_id,
+  co.pizza_id,
+  co.exclusions,
+  co.extras,
+  co.order_time,
+  ro.runner_id,
+  ro.pickup_time,
+  ro.distance,
+  ro.duration,
+  ro.cancellation,
+  pn.pizza_name,
+  r.registration_date
+  FROM
+  	db_customer_orders co
+  LEFT JOIN
+	db_runner_orders ro on co.order_id = ro.order_id
+  LEFT JOIN
+  pizza_names pn on co.pizza_id = pn.pizza_id
+  LEFT JOIN
+  runners r on ro.runner_id = r.runner_id
+ )
+```
+### Question 1: How many pizzas were ordered?
+```
+ SELECT 
+ 	COUNT(pizza_id) as orderedpizzas
+ FROM db
+```
