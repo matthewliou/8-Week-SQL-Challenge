@@ -1,6 +1,6 @@
 ## Questions and Answers
 # Cleaning and Transforming Data
-'''
+```
 WITH
 db_customer_orders as (
   SELECT 
@@ -26,5 +26,5 @@ db_runner_orders as (
   FROM
   	runner_orders
   )
- 
-'''
+```
+
