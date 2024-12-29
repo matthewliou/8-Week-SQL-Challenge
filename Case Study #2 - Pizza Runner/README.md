@@ -102,7 +102,49 @@ Answer:
 
 ### Question 5: How many Vegetarian and Meatlovers were ordered by each customer?
 
-
+```
+SELECT
+ 	customer_id,
+    pizza_name,
+    count(pizza_name) as orders
+ FROM
+ 	db
+ GROUP BY
+ 	customer_id,
+    pizza_name
+ORDER BY
+	customer_id ASC
+```
+Answer:
 ![image](https://github.com/user-attachments/assets/c7f418a2-de5e-4567-94cc-1fcd75997757)
 
+### Question 6: What was the maximum number of pizzas delivered in a single order?
+```
+SELECT
+	order_id,
+  	count(order_id) as orders
+FROM
+db
+GROUP BY order_id
+ORDER BY orders DESC
+  LIMIT 1
+```
+Answer:
+![image](https://github.com/user-attachments/assets/75ec1e26-c2ae-4ec5-bc82-c82b587f594c)
+
+### Question 7: For each customer, how many delivered pizzas had at least 1 change and how many had no changes?
+```
+SELECT
+	customer_id,
+    SUM(CASE WHEN exclusions <> '' OR extras <> '' THEN 1 ELSE 0 END) as changes,
+	SUM(CASE WHEN exclusions = '' AND extras = '' THEN 1 ELSE 0 END) as nochanges
+FROM 
+db
+WHERE
+cancellation NOT LIKE '%Cancellation%'
+GROUP BY customer_id
+ORDER BY customer_id ASC
+```
+Answer:
+![image](https://github.com/user-attachments/assets/3fe60d66-f7d5-425e-9a67-c32d62a75895)
 
