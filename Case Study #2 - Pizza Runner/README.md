@@ -84,3 +84,25 @@ WHERE cancellation NOT LIKE '%Cancellation%'
 ```
 Answer:
 ![image](https://github.com/user-attachments/assets/56f2df83-70b3-4d6d-ab92-36387255019f)
+
+### Question 4: How many of each type of pizza was delivered?
+```
+ SELECT 
+ 	pizza_name,
+    count(pizza_name) as orders
+ FROM 
+ 	db
+ WHERE 
+ cancellation NOT LIKE '%Cancellation%'
+ GROUP BY 
+ 	pizza_name
+```
+Answer:
+![image](https://github.com/user-attachments/assets/162bdff7-9a9d-4b86-9564-50c08ac8194f)
+
+### Question 5: How many Vegetarian and Meatlovers were ordered by each customer?
+
+
+![image](https://github.com/user-attachments/assets/c7f418a2-de5e-4567-94cc-1fcd75997757)
+
+
