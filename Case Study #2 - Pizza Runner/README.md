@@ -54,6 +54,7 @@ db as (
   runners r on ro.runner_id = r.runner_id
  )
 ```
+## A. Pizza Metrics
 ### Question 1: How many pizzas were ordered?
 ```
  SELECT 
@@ -147,4 +148,42 @@ ORDER BY customer_id ASC
 ```
 Answer:
 ![image](https://github.com/user-attachments/assets/3fe60d66-f7d5-425e-9a67-c32d62a75895)
+
+### Questions 8: How many pizzas were delivered that had both exclusions and extras?
+```
+SELECT
+    SUM(CASE WHEN exclusions <> '' AND extras <> '' THEN 1 ELSE 0 END) as exclusions_extras
+FROM 
+db
+WHERE
+cancellation NOT LIKE '%Cancellation%'
+```
+Answer:
+![image](https://github.com/user-attachments/assets/c490245c-7ccd-48ac-9b71-b5c19aa39e7f)
+
+### Questions 9: What was the total volume of pizzas ordered for each hour of the day?
+```
+SELECT
+    DATE_PART('hour', order_time) as hour,
+    COUNT(order_id) as num_orders
+FROM 
+db
+GROUP BY
+hour
+```
+Answer:
+![image](https://github.com/user-attachments/assets/b396a86d-47d9-48f4-8b75-22942dc1ba49)
+
+### Questions 10: What was the volume of orders for each day of the week?
+```
+SELECT
+    TO_CHAR(order_time, 'Day') as day_of_week,
+    COUNT(order_id) as num_orders
+FROM 
+db
+GROUP BY
+day_of_week
+```
+Answer:
+![image](https://github.com/user-attachments/assets/e60b7af2-8219-478e-a0f4-c08799b72f78)
 
