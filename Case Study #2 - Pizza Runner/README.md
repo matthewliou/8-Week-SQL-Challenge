@@ -149,7 +149,7 @@ ORDER BY customer_id ASC
 Answer:
 ![image](https://github.com/user-attachments/assets/3fe60d66-f7d5-425e-9a67-c32d62a75895)
 
-### Questions 8: How many pizzas were delivered that had both exclusions and extras?
+### Question 8: How many pizzas were delivered that had both exclusions and extras?
 ```
 SELECT
     SUM(CASE WHEN exclusions <> '' AND extras <> '' THEN 1 ELSE 0 END) as exclusions_extras
@@ -161,7 +161,7 @@ cancellation NOT LIKE '%Cancellation%'
 Answer:
 ![image](https://github.com/user-attachments/assets/c490245c-7ccd-48ac-9b71-b5c19aa39e7f)
 
-### Questions 9: What was the total volume of pizzas ordered for each hour of the day?
+### Question 9: What was the total volume of pizzas ordered for each hour of the day?
 ```
 SELECT
     DATE_PART('hour', order_time) as hour,
@@ -174,7 +174,7 @@ hour
 Answer:
 ![image](https://github.com/user-attachments/assets/b396a86d-47d9-48f4-8b75-22942dc1ba49)
 
-### Questions 10: What was the volume of orders for each day of the week?
+### Question 10: What was the volume of orders for each day of the week?
 ```
 SELECT
     TO_CHAR(order_time, 'Day') as day_of_week,
@@ -188,3 +188,25 @@ Answer:
 ![image](https://github.com/user-attachments/assets/e60b7af2-8219-478e-a0f4-c08799b72f78)
 
 ## B. Runner and Customer Experience
+### Question 1: How many runners signed up for each 1 week period? (i.e. week starts 2021-01-01)
+```
+ SELECT
+ 	((registration_date - '2021-01-01')/7)+1 as registration_week,
+    COUNT(runner_id) as num_signups
+ FROM
+ 	runners
+GROUP BY registration_week
+ORDER BY registration_week ASC
+```
+Answer:
+![image](https://github.com/user-attachments/assets/0ddf9a11-fa21-467f-b28b-ccdbe6d438ae)
+
+### Question 2: What was the average time in minutes it took for each runner to arrive at the Pizza Runner HQ to pickup the order?
+```
+ SELECT
+	AVG(DATEDIFF(MINUTE, order_time, pickup_time)) as average_pickup_time
+ FROM
+ 	db
+ WHERE
+ 	cancellation NOT LIKE '%Cancellation%'
+```
